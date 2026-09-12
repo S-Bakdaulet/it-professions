@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог IT-профессий — Главная</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="index.html">IT-Professions</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="#catalog">Каталог</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ОБЛОЖКА -->
+  <section class="hero">
+    <div class="container">
+      <h1>Каталог востребованных IT-специальностей</h1>
+      <p>Выберите направление для обучения и построения успешной карьеры в сфере информационных технологий.</p>
+      <a class="button" href="#catalog">Смотреть каталог</a>
+    </div>
+  </section>
+
+  <!-- КАРТОЧКАЛАР -->
+  <main>
+    <section class="section" id="catalog">
+      <div class="container">
+        <h2>Популярные направления</h2>
+
+        <div class="cards">
+
+          <article class="card">
+            <img src="images/1.webp" alt="Frontend Developer">
+            <div class="card__body">
+              <h3>Frontend Developer</h3>
+              <p>Создание интерфейсов веб-сайтов с использованием HTML, CSS и JavaScript.</p>
+              <button class="card-btn" onclick="openModal('modal-frontend')">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="images/2.webp" alt="Backend Developer">
+            <div class="card__body">
+              <h3>Backend Developer</h3>
+              <p>Разработка серверной логики, работа с базами данных (SQL) и API.</p>
+              <button class="card-btn" onclick="openModal('modal-backend')">Подробнее</button>
+            </div>
+          </article>
+
+          <article class="card">
+            <img src="images/3.webp" alt="UI/UX Designer">
+            <div class="card__body">
+              <h3>UI/UX Designer</h3>
+              <p>Проектирование удобных и эстетичных интерфейсов для веб-приложений.</p>
+              <button class="card-btn" onclick="openModal('modal-uiux')">Подробнее</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- МОДАЛЬДІ ТЕРЕЗЕЛЕР -->
+  <div id="modal-frontend" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-frontend')">&times;</span>
+      <h2>Frontend Developer</h2>
+      <p class="modal-subtitle">Разработка пользовательских интерфейсов</p>
+      <h4>Ключевые навыки:</h4>
+      <ul>
+        <li>HTML5, CSS3, JavaScript (ES6+)</li>
+        <li>Фреймворки: React.js, Vue.js</li>
+        <li>Адаптивная верстка</li>
+      </ul>
+      <h4>Средняя зарплата:</h4>
+      <p class="salary">450 000 - 1 200 000 ₸</p>
+    </div>
+  </div>
+
+  <div id="modal-backend" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-backend')">&times;</span>
+      <h2>Backend Developer</h2>
+      <p class="modal-subtitle">Серверная логика и базы данных</p>
+      <h4>Ключевые навыки:</h4>
+      <ul>
+        <li>Языки: Python, Node.js, Java</li>
+        <li>Базы данных: PostgreSQL, MySQL</li>
+        <li>Создание REST API</li>
+      </ul>
+      <h4>Средняя зарплата:</h4>
+      <p class="salary">500 000 - 1 500 000 ₸</p>
+    </div>
+  </div>
+
+  <div id="modal-uiux" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-uiux')">&times;</span>
+      <h2>UI/UX Designer</h2>
+      <p class="modal-subtitle">Проектирование интерфейсов</p>
+      <h4>Ключевые навыки:</h4>
+      <ul>
+        <li>Figma, Adobe XD</li>
+        <li>Прототипирование и UX-исследования</li>
+        <li>Дизайн-системы</li>
+      </ul>
+      <h4>Средняя зарплата:</h4>
+      <p class="salary">400 000 - 1 000 000 ₸</p>
+    </div>
+  </div>
+
+  <!-- КОНТАКТЫЛАР БӨЛІМІ (ФУТЕР) -->
+  <footer class="footer" id="contacts">
+    <div class="container">
+      <div class="footer__contacts">
+        <div>
+          <h4>Контакты</h4>
+          <p>Email: info@it-professions.kz</p>
+          <p>Тел: +7 (777) 007-56-66</p>
+        </div>
+        <div>
+          <h4>Локация</h4>
+          <p>г. Семей, Казахстан</p>
+          <p>Учебный проект 2026</p>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>Шәріпбаев Бақдәулет. Семей, 2026 год.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = "flex";
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
