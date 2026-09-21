@@ -16,6 +16,7 @@
         <ul>
           <li><a href="index.html">Главная</a></li>
           <li><a href="#catalog">Каталог</a></li>
+          <li><a href="#apply">Записаться</a></li>
           <li><a href="#contacts">Контакты</a></li>
         </ul>
       </nav>
@@ -67,6 +68,25 @@
           </article>
 
         </div>
+      </div>
+    </section>
+
+    <!-- КУРСҚА ЖАЗЫЛУ ФОРМАСЫ -->
+    <section class="section" id="apply" style="background-color: rgba(255, 255, 255, 0.05); padding: 40px 0;">
+      <div class="container">
+        <h2>Записаться на курс</h2>
+        <form id="courseForm" style="max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+          <input type="text" id="studentName" placeholder="Ваше имя (Имя и Фамилия)" required style="padding: 12px; border-radius: 6px; border: 1px solid #444; background: #222; color: #fff; font-size: 16px;">
+          
+          <select id="selectedCourse" required style="padding: 12px; border-radius: 6px; border: 1px solid #444; background: #222; color: #fff; font-size: 16px;">
+            <option value="" disabled selected>Выберите курс</option>
+            <option value="Frontend Developer">Frontend Developer</option>
+            <option value="Backend Developer">Backend Developer</option>
+            <option value="UI/UX Designer">UI/UX Designer</option>
+          </select>
+          
+          <button type="submit" class="button" style="cursor: pointer; font-size: 16px; border: none;">Отправить заявку</button>
+        </form>
       </div>
     </section>
   </main>
@@ -153,6 +173,24 @@
         event.target.style.display = "none";
       }
     }
+
+    // Форманы жіберу логикасы
+    document.getElementById('courseForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('studentName').value;
+      const course = document.getElementById('selectedCourse').value;
+      
+      // SQL сұранысын құрастыру
+      const sqlQuery = `INSERT INTO CourseRequests (student_name, selected_course) VALUES ('${name}', '${course}');`;
+      
+      alert(`Спасибо, ${name}! Ваша заявка на курс "${course}" успешно отправлена.`);
+      
+      console.log("%cСгенерированный SQL-запрос для DBeaver:", "color: #00ff00; font-weight: bold; font-size: 14px;");
+      console.log(sqlQuery);
+      
+      this.reset();
+    });
   </script>
 </body>
 </html>
