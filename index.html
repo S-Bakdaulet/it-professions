@@ -174,22 +174,41 @@
       }
     }
 
-    // Форманы жіберу логикасы
-    document.getElementById('courseForm').addEventListener('submit', function(e) {
+    // Форманы бэкендке (Flask API) және базаға сақтау логикасы
+    document.getElementById('courseForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
       const name = document.getElementById('studentName').value;
       const course = document.getElementById('selectedCourse').value;
       
-      // SQL сұранысын құрастыру
-      const sqlQuery = `INSERT INTO CourseRequests (student_name, selected_course) VALUES ('${name}', '${course}');`;
-      
-      alert(`Спасибо, ${name}! Ваша заявка на курс "${course}" успешно отправлена.`);
-      
-      console.log("%cСгенерированный SQL-запрос для DBeaver:", "color: #00ff00; font-weight: bold; font-size: 14px;");
-      console.log(sqlQuery);
-      
-      this.reset();
+      try {
+        // Python (Flask) бэкенд серверіне AJAX-сұраныс жіберу
+        const response = await fetch('http://127.0.0.1:5000/api/apply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, course: course })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          alert(result.message);
+          this.reset();
+        } else {
+          alert("Ошибка: " + result.message);
+        }
+      } catch (error) {
+        // Егер локальді Flask сервері сөндірулі болса, резервтік SQL генерация режимі іске қосылады:
+        console.warn("Локальный Flask-сервер недоступен. Переключение в режим сгенерированного SQL:");
+        
+        const sqlQuery = `INSERT INTO CourseRequests (student_name, selected_course) VALUES ('${name}', '${course}');`;
+        alert(`Спасибо, ${name}! Ваша заявка на курс "${course}" отправлена.`);
+        
+        console.log("%cСгенерированный SQL-запрос для DBeaver:", "color: #00ff00; font-weight: bold; font-size: 14px;");
+        console.log(sqlQuery);
+        
+        this.reset();
+      }
     });
   </script>
 </body>
