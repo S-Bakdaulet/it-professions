@@ -78,6 +78,9 @@
         <form id="courseForm" style="max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
           <input type="text" id="studentName" placeholder="Ваше имя (Имя и Фамилия)" required style="padding: 12px; border-radius: 6px; border: 1px solid #444; background: #222; color: #fff; font-size: 16px;">
           
+          <!-- ТЕЛЕФОН НОМЕРІ ӨРІСІ -->
+          <input type="tel" id="studentPhone" placeholder="Ваш номер телефона (+7 707 123-45-67)" required style="padding: 12px; border-radius: 6px; border: 1px solid #444; background: #222; color: #fff; font-size: 16px;">
+
           <select id="selectedCourse" required style="padding: 12px; border-radius: 6px; border: 1px solid #444; background: #222; color: #fff; font-size: 16px;">
             <option value="" disabled selected>Выберите курс</option>
             <option value="Frontend Developer">Frontend Developer</option>
@@ -174,39 +177,39 @@
       }
     }
 
-    // Форманы бэкендке (Flask API) және базаға сақтау логикасы
+    // Форманы Flask API бэкендке жіберу
     document.getElementById('courseForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
       const name = document.getElementById('studentName').value;
+      const phone = document.getElementById('studentPhone').value;
       const course = document.getElementById('selectedCourse').value;
       
       try {
-        // Python (Flask) бэкенд серверіне AJAX-сұраныс жіберу
+        // Толық URL мекенжайын көрсеттік (http://127.0.0.1:5000)
         const response = await fetch('http://127.0.0.1:5000/api/apply', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: name, course: course })
+          body: JSON.stringify({ name: name, phone: phone, course: course })
         });
         
         const result = await response.json();
         
         if (response.ok) {
-          alert(result.message);
+          alert(result.message || "Заявка успешно отправлена!");
           this.reset();
         } else {
-          alert("Ошибка: " + result.message);
+          alert("Ошибка: " + (result.message || "Не удалось отправить заявку"));
         }
       } catch (error) {
-        // Егер локальді Flask сервері сөндірулі болса, резервтік SQL генерация режимі іске қосылады:
-        console.warn("Локальный Flask-сервер недоступен. Переключение в режим сгенерированного SQL:");
+        console.warn("Локальный Flask-сервер недоступен. Режим резервной генерации SQL:");
         
-        const sqlQuery = `INSERT INTO CourseRequests (student_name, selected_course) VALUES ('${name}', '${course}');`;
-        alert(`Спасибо, ${name}! Ваша заявка на курс "${course}" отправлена.`);
+        // Резервтік SQL сұранысына телефон өрісі қосылды
+        const sqlQuery = `INSERT INTO CourseRequests (student_name, phone, selected_course) VALUES ('${name}', '${phone}', '${course}');`;
         
+        alert(`Спасибо, ${name}! Ваша заявка на курс "${course}" принята.`);
         console.log("%cСгенерированный SQL-запрос для DBeaver:", "color: #00ff00; font-weight: bold; font-size: 14px;");
         console.log(sqlQuery);
-        
         this.reset();
       }
     });
